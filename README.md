@@ -41,7 +41,7 @@ Through the correct use of the API, you will be able to:
 ## API Structure Diagram:
 - https://drive.google.com/file/d/1VZFj1-qXqRPVK6rS_7EtEFxR-0ZRpk5_/view?usp=share_link
 ## Information for Devs:
-- The API code is written with the naming conventions, we use PascalCase for the name of Models, and their homonyms in SQL with snake_case. It is suggested that subsequent modifications follow the same convention to keep clean the project.
+- The API code is written with the naming conventions, among others, we use PascalCase for the name of Models, and their homonyms in SQL with snake_case. It's suggested for future modifications follows the same convention to keep clean the project.
 - Each method that calls a setter is accompanied by a comment with details about your implementation. The JSON file attached at the following link provides the raw data for a easily access, check, and modify routes on Postman body. (https://drive.google.com/file/d/10NCLJN8WaWKpbKv1mjc2stysk71kzolZ/view?usp=share_link)
 ## App done by:
 - [Emmanuel Escobar](https://github.com/Emmascobar)

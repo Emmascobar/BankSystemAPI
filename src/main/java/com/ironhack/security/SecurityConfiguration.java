@@ -41,8 +41,7 @@ public class SecurityConfiguration {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         /* Filter routes */
         http.authorizeHttpRequests()
-                /* Autentificated routes for Users / After testing routes you can active this lines to protected */
-
+                /* Autentificated routas for Users */
 //                .requestMatchers(HttpMethod.GET, "/user/login/**").authenticated()
 //                .requestMatchers(HttpMethod.POST, "/user/login/**").authenticated()
 //                .requestMatchers(HttpMethod.GET, "User/accounts/thirdparty/{id}/**").authenticated()
@@ -52,9 +51,8 @@ public class SecurityConfiguration {
 //                .requestMatchers(HttpMethod.PATCH, "/admin/**").hasRole("ADMIN")
 //                .requestMatchers(HttpMethod.DELETE, "/admin/**").hasRole("ADMIN")
 //                /* Common Users routes protected */
-//                .requestMatchers(HttpMethod.GET, "User/accounts/{id}/transfer/**").hasRole("USER")
-//                .requestMatchers(HttpMethod.GET, "user/accounts/{id}**").hasAnyRole("USER", "ADMIN")
-//
+//                .requestMatchers(HttpMethod.GET, "User/accounts/{id}/transfer**").hasRole("USER")
+//                .requestMatchers(HttpMethod.GET, "user/accounts/account-holder/{id}").hasAnyRole("USER", "ADMIN")
                 /* rest are secure */
                 .anyRequest().permitAll();
 

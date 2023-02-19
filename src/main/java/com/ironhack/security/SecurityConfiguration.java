@@ -5,6 +5,7 @@ import com.ironhack.filters.CustomAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -42,17 +43,17 @@ public class SecurityConfiguration {
         /* Filter routes */
         http.authorizeHttpRequests()
                 /* Autentificated routas for Users */
-//                .requestMatchers(HttpMethod.GET, "/user/login/**").authenticated()
-//                .requestMatchers(HttpMethod.POST, "/user/login/**").authenticated()
-//                .requestMatchers(HttpMethod.GET, "User/accounts/thirdparty/{id}/**").authenticated()
-//                /* Admin routes protected by roles*/
-//                .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.POST, "/admin/**").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.PATCH, "/admin/**").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.DELETE, "/admin/**").hasRole("ADMIN")
-//                /* Common Users routes protected */
-//                .requestMatchers(HttpMethod.GET, "User/accounts/{id}/transfer**").hasRole("USER")
-//                .requestMatchers(HttpMethod.GET, "user/accounts/account-holder/{id}").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/user/login/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/user/login/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "User/accounts/thirdparty/{id}/**").authenticated()
+                /* Admin routes protected by roles*/
+                .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/admin/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PATCH, "/admin/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/admin/**").hasRole("ADMIN")
+                /* Common Users routes protected */
+                .requestMatchers(HttpMethod.GET, "User/accounts/{id}/transfer**").hasRole("USER")
+                .requestMatchers(HttpMethod.GET, "user/accounts/account-holder/{id}").hasAnyRole("USER", "ADMIN")
                 /* rest are secure */
                 .anyRequest().permitAll();
 

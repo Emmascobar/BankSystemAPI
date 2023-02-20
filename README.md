@@ -9,8 +9,8 @@ Banking System API is an application developed under the REST API architecture c
 1) Banking System used SQL database, so required configure an instance and schema in MySQL with the name "Banking_System", this will be database saving routes.
 2) Run the program to give permission to the controller routes to make changes.
 3) Controller routes can be tested using POSTMAN or any other HTTP request and test programme (At the final of this chapter you can find a link with JSON raw information to facilitate test it).
-## Instances & Methods
-Through the correct use of the API, you will be able to:
+## Specifications
+With the correct use of BANKING SYSTEM API, you will be able to:
 #### Create USERS: Administrators, holder accounts and third parties
 #### Create BANK ACCOUNTS: Checking, savings and credit cards. 
 #### Checking accounts:

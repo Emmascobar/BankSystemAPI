@@ -1,12 +1,12 @@
 
 # BANKING SYSTEM API
 
-An API is a programming interface designed exclusively for the use of clients who require careful treatment of data and optimal management of their systems.
-With the Banking System API, we offer a careful treatment of the database that structures the banking like an entity, speeding up, in a detailed manner, the registration of operations,optimizing data and generating transactions that keep the financial system of bank always safe.
+An API is a programming interface designed exclusively for the use of clients who require a careful treatment of data and optimal management of their systems.
+With the Banking System API, we offer a careful treatment of the database that structures the banking like an entity, speeding up, in a detailed manner, the registration of operations,optimizing data and generating transactions that keep, always safe, the financial bank system.
 
 Banking System API is an application developed under the REST API architecture criteria, which allows optimal integration with external servers and database. It is designed to be used mainly by bank administrators, containing access routes for account holders, as well as third parties.
 ## How to configure
-1) Banking System used SQL database, so required to configure an instance and schema in MySQL with the name "Banking_System", this will be database saving routes.
+1) Banking System used SQL database, so required configure an instance and schema in MySQL with the name "Banking_System", this will be database saving routes.
 2) Run the program to give permission to the controller routes to make changes.
 3) Controller routes can be tested using POSTMAN or any other HTTP request and test programme (At the final of this chapter you can find a link with JSON raw information to facilitate test it).
 ## Instances & Methods

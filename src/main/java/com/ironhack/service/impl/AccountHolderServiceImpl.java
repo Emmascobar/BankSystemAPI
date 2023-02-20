@@ -59,9 +59,7 @@ public class AccountHolderServiceImpl implements AccountHolderService {
     }
     /* Get account information  */
     public AccountHolder getAccount(Long id) {
-        AccountHolder accountHolder = accountHoldersRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
-        return accountHoldersRepository.save(accountHolder);
-    }
+        return accountHoldersRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));}
     /* Get credit balance mount and check interest automatically  */
     public Money getCreditBalance(Long id) {
         CreditCard creditCard = creditCardRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));

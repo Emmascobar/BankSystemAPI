@@ -1,5 +1,4 @@
 package com.ironhack.controller.impl;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ironhack.controller.interfaces.AdminController;
@@ -16,7 +15,7 @@ import com.ironhack.model.Utils.Transfer;
 import com.ironhack.repository.Accounts.AccountRepository;
 import com.ironhack.repository.Users.RoleRepository;
 import com.ironhack.repository.Users.ThirdPartyRepository;
-import com.ironhack.repository.Utils.TransferenceRepository;
+import com.ironhack.repository.Utils.TransferRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +29,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,7 +47,7 @@ class ThirdPartyControllerImplTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    TransferenceRepository transferenceRepository;
+    TransferRepository transferRepository;
     @Autowired
     RoleRepository roleRepository;
     private Role adminUserRole, holderUserRole;
@@ -71,8 +70,8 @@ class ThirdPartyControllerImplTest {
         /* SET USERS AND TIPES OF ROLES */
         thirdParty = new ThirdParty(new Money(new BigDecimal("500")), "AAB123456");
         thirdPartyRepository.save(thirdParty);
-        transfer = new Transfer(new BigDecimal("100"), 2L, "Emma", 1L, 456789);
-        transferenceRepository.save(transfer);
+        transfer = new Transfer(new BigDecimal("100"), 2L, "Emma", 1L, 456789, LocalDate.now());
+        transferRepository.save(transfer);
         /* BANK ACCOUNTS */
         saving01 = new Saving(123456, accountHolder1, null);
         saving02 = new Saving(456789, accountHolder2, null);
@@ -103,7 +102,7 @@ class ThirdPartyControllerImplTest {
                 .andExpect(status().isOk())
                 .andReturn();
         // testing
-        assertEquals(1, transferenceRepository.findAll().size());
+        assertEquals(1, transferRepository.findAll().size());
         assertEquals(new BigDecimal("1000"), saving01.getBalance().getAmount());
     }
     @Test
@@ -134,7 +133,7 @@ class ThirdPartyControllerImplTest {
                 .andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Matias Fabbro"));
         // testing
-        assertEquals(1, transferenceRepository.findAll().size());
+        assertEquals(1, transferRepository.findAll().size());
         assertEquals(new BigDecimal("1000"), saving01.getBalance().getAmount());
 
     }

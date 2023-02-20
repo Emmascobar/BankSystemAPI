@@ -16,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-
 @Service
 public class ThirdPartyServiceImpl implements ThirdPartyService {
 
@@ -31,12 +29,14 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
 
 
     public Transfer transfer(HttpServletRequest header, Transfer transfer) {
+        /* Setting origin and destination account */
         Account destination = accountRepository.findById(transfer.getDestinationId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destination ID not found"));;
         ThirdParty thirdPartyAccount = thirdPartyRepository.findById(transfer.getOwnerId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Origin ID not found"));;
         String hashKey = header.getHeader("hashKey");
-        // Checking Hashkey & secretKey //
+
+        // Checking Hashkey & secretKey // Normaly with ThrirdParty We no need check the balance because they should always have a positive balance.
         if (!thirdPartyAccount.getHashKey().equals(hashKey)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Incorrect hashKey");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Incorrect hashKey");
         } else if(destination.getSecretKey().equals(transfer.getSecretKey())){
             destination.setBalance(new Money(destination.getBalance().getAmount().add(transfer.getAmount())));
             accountRepository.save(destination);
@@ -46,7 +46,7 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Wrong SecretKey");
         }
         /* Save & Registry transfer on system and database */
-        log.info("Transfer registry on DateBase, from " + transfer.getId() + " to " + transfer.getDestinationId() + " with a amount of " + transfer.getAmount() + " at " + LocalDate.now());
+        log.info("Transfer registry on DateBase, from " + transfer.getId() + " to " + transfer.getDestinationId() + " with a amount of " + transfer.getAmount() + " at " + transfer.getDate());
         return transferRepository.save(transfer);
     }
 

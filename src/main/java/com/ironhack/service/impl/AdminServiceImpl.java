@@ -59,7 +59,6 @@ public class AdminServiceImpl implements AdminService {
 
     /* Find and get all accounts */
     public List<Account> getAllAccounts() { return accountRepository.findAll();}
-
     /* Find and get an account by ID */
     public Account getAccountById(Long id) {return accountRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));}
     /* Find and get all Users */
@@ -84,7 +83,7 @@ public class AdminServiceImpl implements AdminService {
     }
     /* Create a new TPUSer */
     public ThirdParty addNewThirdPartyUser(ThirdParty thirdParty) {
-     /* Should active if you want to protect the hashKey*/
+     /* Should active this lines if you want to protect the hashKey*/
     //        encodedPassword = passwordEncoder.encode(thirdParty.getHashKey());
     //        thirdParty.setHashKey(encodedPassword);
     //        role = new Role("NONE");
@@ -177,14 +176,14 @@ public class AdminServiceImpl implements AdminService {
                 creditCardRepository.save(creditCard);
             }
         }
+
     // Update Minimum Balance // SAVING ACCOUNTS.
     public void updateMinimumBalance(Long id, SavingMinimumBalanceDTO savingMinimumBalanceDTO) {
-        Saving updateBalanceSaving = savingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Saving count not found"));
+        Saving updateSavingBalance = savingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Saving account not found"));
         BigDecimal minimumBalance = savingMinimumBalanceDTO.getMinimumBalance().getAmount();
-            updateBalanceSaving.setMinimumBalance(new Money(minimumBalance));
-            savingRepository.save(updateBalanceSaving);
+        updateSavingBalance.setMinimumBalance(new Money(minimumBalance));
+            savingRepository.save(updateSavingBalance);
         }
-
     // Delete a account
     public void deleteAccount(Long id) {
         if (!accountRepository.findById(id).isPresent()) {

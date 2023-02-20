@@ -5,9 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.jetbrains.annotations.NotNull;
-
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 public class Transfer {
@@ -22,16 +22,18 @@ public class Transfer {
     @NotNull
     private Long ownerId;
     private Integer secretKey;
+    private LocalDate date;
 
     public Transfer() {
     }
 
-    public Transfer(BigDecimal amount, Long destinationId, String destinationName,Long ownerId, Integer secretKey) {
+    public Transfer(BigDecimal amount, Long destinationId, String destinationName,Long ownerId, Integer secretKey, LocalDate date) {
         this.amount = amount;
         this.destinationId = destinationId;
         this.destinationName = destinationName;
         this.ownerId = ownerId;
         this.secretKey = secretKey;
+        this.date = LocalDate.now();
     }
 
     public Long getId() {
@@ -80,6 +82,14 @@ public class Transfer {
 
     public void setSecretKey(Integer secretKey) {
         this.secretKey = secretKey;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
 

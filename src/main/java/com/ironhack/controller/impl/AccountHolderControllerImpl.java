@@ -15,10 +15,17 @@ public class AccountHolderControllerImpl implements AccountHolderController {
     @Autowired
     AccountHolderService accountHolderService;
 
-    /* GETMAPPING Create account Holders */
+    /* POSTMAPPING Create others account Holders */
+    @GetMapping("user/accounts/account-holder")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountHolder createAccount(Authentication authentication, @RequestBody AccountHolder accountHolder) {
+        return accountHolderService.createAccount(accountHolder);
+    }
+
+    /* GETMAPPING Get Account Info- Account Holders */
     @GetMapping("user/accounts/account-holder/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AccountHolder createAccount(Authentication authentication, @PathVariable Long id) {
+    public AccountHolder getAccount(Authentication authentication, @PathVariable Long id) {
         return accountHolderService.getAccount(id);
     }
 

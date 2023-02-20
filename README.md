@@ -1,10 +1,9 @@
-
 # BANKING SYSTEM API
 
 An API is a programming interface designed exclusively for the use of clients who require a careful treatment of data and optimal management of their systems.
-With the Banking System API, we offer a careful treatment of the database that structures the banking like an entity, speeding up, in a detailed manner, the registration of operations,optimizing data and generating transactions that keep, always safe, the financial bank system.
+With the Banking System API, we offer a careful treatment of the database that structures the banking like an entity, speeding up, with clear details, the registration of operations, optimizing data and generating transactions that keep, always safe, the financial bank system.
 
-Banking System API is an application developed under the REST API architecture criteria, which allows optimal integration with external servers and database. It is designed to be used mainly by bank administrators, containing access routes for account holders, as well as third parties.
+Banking System API is an application developed under the REST API architecture criteria, which allows optimal integration with external servers and database like SQL. It is designed to be used mainly by bank administrators, also, containing access routes for account holders users, as well as third parties.
 ## How to configure
 1) Banking System used SQL database, so required configure an instance and schema in MySQL with the name "Banking_System", this will be database saving routes.
 2) Run the program to give permission to the controller routes to make changes.
@@ -43,7 +42,7 @@ With the correct use of BANKING SYSTEM API, you will be able to:
 - SQL: to review and administrate the database.
 ## Information for Devs:
 - The API code is written with the naming conventions, among others, we use PascalCase for the name of Models, and their homonyms in SQL with snake_case. It's suggested for future modifications follows the same convention to keep clean the project.
-- The root model of the repository, controllers, models and services were correctly organized in different packages, given possible future updates and the growth of the project, which will facilitate the development of the architecture.
+- The root model of the repository, controllers, models and services were correctly organized in different packages, giving the possibility to future updates and allow growth of the project, which will facilitate the development of the API architecture.
 - Each method that calls a setter is accompanied by a comment with details about your implementation. The JSON file attached at the following link provides the raw data for a easily access, check, and modify routes on Postman body. (https://drive.google.com/file/d/10NCLJN8WaWKpbKv1mjc2stysk71kzolZ/view?usp=share_link)
 ## App done by:
 - [Emmanuel Escobar](https://github.com/Emmascobar)

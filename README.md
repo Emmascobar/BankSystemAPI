@@ -42,6 +42,7 @@ Through the correct use of the API, you will be able to:
 - JPA: to map and relate the API with the database.
 ## Information for Devs:
 - The API code is written with the naming conventions, among others, we use PascalCase for the name of Models, and their homonyms in SQL with snake_case. It's suggested for future modifications follows the same convention to keep clean the project.
+- The root model of the repository, controllers, models and services were correctly organized in different packages, given possible future updates and the growth of the project, which will facilitate the development of the architecture.
 - Each method that calls a setter is accompanied by a comment with details about your implementation. The JSON file attached at the following link provides the raw data for a easily access, check, and modify routes on Postman body. (https://drive.google.com/file/d/10NCLJN8WaWKpbKv1mjc2stysk71kzolZ/view?usp=share_link)
 ## App done by:
 - [Emmanuel Escobar](https://github.com/Emmascobar)

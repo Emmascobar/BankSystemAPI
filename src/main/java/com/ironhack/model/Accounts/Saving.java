@@ -4,6 +4,7 @@ import com.ironhack.model.Users.AccountHolder;
 import com.ironhack.model.Utils.Money;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -25,10 +26,11 @@ public class Saving extends Account {
     @DecimalMax(value = "1000")
     private Money minimumBalance;
     @DecimalMax(value = "0.5")
-    @DecimalMin(value = "0.0025")
+    @DecimalMin(value = "0")
     private BigDecimal interestRate;
     @Nullable
     private BigDecimal penaltyFee;
+    @DateTimeFormat(pattern = "dd MM yyyy")
     private LocalDate lastUpdate;
     public Saving() {
     }
@@ -71,7 +73,7 @@ public class Saving extends Account {
         this.lastUpdate = lastUpdate;
     }
 
-    // ANNUAL INTEREST RATE METHOD
+    // ANNUAL INTEREST RATE METHOD // USED CHRONOUnit to set last updates times/ Apply in Saving Services.
     public void setAnnualInterestRate(){
         long elapsedTime = ChronoUnit.YEARS.between(getLastUpdate(), LocalDate.now());
         if (elapsedTime > 1) {
@@ -80,7 +82,7 @@ public class Saving extends Account {
             setLastUpdate(LocalDate.now());
         }
     }
-    // PENALTY FEE METHOD
+    // PENALTY FEE METHOD // Apply in Savings Services.
     public void applyPenaltyFee() {
         if (getBalance().getAmount().compareTo(getMinimumBalance().getAmount())  == -1) {
             setBalance(new Money(getBalance().getAmount().subtract(penaltyFee)));

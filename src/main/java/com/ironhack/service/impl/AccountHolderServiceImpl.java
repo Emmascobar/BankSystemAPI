@@ -13,7 +13,7 @@ import com.ironhack.repository.Accounts.CreditCardRepository;
 import com.ironhack.repository.Accounts.SavingRepository;
 import com.ironhack.repository.Users.AccountHoldersRepository;
 import com.ironhack.repository.Users.RoleRepository;
-import com.ironhack.repository.Utils.TransferenceRepository;
+import com.ironhack.repository.Utils.TransferRepository;
 import com.ironhack.service.interfaces.AccountHolderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -32,7 +31,7 @@ public class AccountHolderServiceImpl implements AccountHolderService {
     @Autowired
     AccountHoldersRepository accountHoldersRepository;
     @Autowired
-    TransferenceRepository transferenceRepository;
+    TransferRepository transferRepository;
     @Autowired
     SavingRepository savingRepository;
     @Autowired
@@ -58,11 +57,12 @@ public class AccountHolderServiceImpl implements AccountHolderService {
         accountHolder = accountHoldersRepository.save(accountHolder);
         return accountHolder;
     }
-    @Override
+    /* Get account information  */
     public AccountHolder getAccount(Long id) {
         AccountHolder accountHolder = accountHoldersRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
         return accountHoldersRepository.save(accountHolder);
     }
+    /* Get credit balance mount and check interest automatically  */
     public Money getCreditBalance(Long id) {
         CreditCard creditCard = creditCardRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
         /* If the elapsed time is more than a month, the monthly interest must be applied automatically and returning the updated Balance */
@@ -70,6 +70,7 @@ public class AccountHolderServiceImpl implements AccountHolderService {
           creditCardRepository.save(creditCard);
           return creditCard.getBalance();
     }
+    /* Get saving balance mount and check interest automatically  */
     public Money getSavingBalance(Long id) {
         Saving saving = savingRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
         /* If the elapsed time is more than a year, the interest must be applied automatically and returning the updated Balance. */
@@ -77,7 +78,7 @@ public class AccountHolderServiceImpl implements AccountHolderService {
         savingRepository.save(saving);
         return saving.getBalance();
     }
-
+    /* Make a transfer and then check the balance and minimumBalance.  */
     public Transfer transfer(Transfer transfer) {
         Account destination = accountRepository.findById(transfer.getDestinationId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destination ID not found"));
         Account ownAccount = accountRepository.findById(transfer.getOwnerId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Origin ID not found"));
@@ -91,16 +92,13 @@ public class AccountHolderServiceImpl implements AccountHolderService {
             accountRepository.save(destination);
             // Before save Origin balance check conditions of Saving or Checking minimum balance and PenaltyFee.
             if (ownAccount instanceof Saving || ownAccount instanceof Checking) {
-                BigDecimal minimumBalance = ((Saving) ownAccount).getMinimumBalance().getAmount();
-                if (ownAccount.getBalance().getAmount().compareTo(minimumBalance) == -1) {
-                    /* Could apply fees*/
-                    ownAccount.setBalance(new Money(ownAccount.getBalance().getAmount().subtract(((Saving) ownAccount).getPenaltyFee())));
+                /* ApplyPenaltyFee Method, check and Could apply fees*/
+                    ((Saving) ownAccount).applyPenaltyFee();
                 }
             }
             accountRepository.save(ownAccount);
-        }
         /* Save & Registry transfer on system and database */
         log.info("Transference registry on DateBase, from " + transfer.getId() + " to " + transfer.getDestinationId() + " with a amount of " + transfer.getAmount() + " at " + LocalDate.now());
-        return transferenceRepository.save(transfer);
+        return transferRepository.save(transfer);
+        }
     }
-}

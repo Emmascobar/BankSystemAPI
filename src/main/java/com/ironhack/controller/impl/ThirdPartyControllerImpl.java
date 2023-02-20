@@ -20,7 +20,7 @@ public class ThirdPartyControllerImpl implements ThridPartyController {
     @Autowired
     ThirdPartyService thirdPartyService;
 
-    /* POSTMAPPING Transfer - ThirdParty */
+    /** POSTMAPPING Transfer - ThirdParty **/
     @PostMapping("User/accounts/thirdparty/transfer/")
     @ResponseStatus(HttpStatus.CREATED)
     public Transfer transfer(Authentication authentication, @RequestBody @Valid HttpServletRequest header, Transfer transfer) {

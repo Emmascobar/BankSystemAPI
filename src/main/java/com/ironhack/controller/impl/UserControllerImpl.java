@@ -15,11 +15,11 @@ public class UserControllerImpl implements UserController {
     @Autowired
     private UserService userService;
 
+    /** GET AND POSTMAPPING User routes */
     @GetMapping("/users")
     public List<User> getUsers() {
         return userService.getUsers();
     }
-
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveUser(@RequestBody User user) {

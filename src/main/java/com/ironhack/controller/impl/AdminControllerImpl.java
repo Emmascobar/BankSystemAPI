@@ -26,6 +26,8 @@ public class AdminControllerImpl implements AdminController {
 
     @Autowired
     AdminService adminService;
+
+    /* GETMAPPING routes */
     @GetMapping("/admin/accounts")
     @ResponseStatus(HttpStatus.OK)
     public List<Account> getAllAccounts() {
@@ -41,6 +43,8 @@ public class AdminControllerImpl implements AdminController {
     public List<User> getAllUsers() {
         return adminService.getAllUsers();
     }
+
+    /** POSTMAPPING routes **/
     @PostMapping("/admin")
     @ResponseStatus(HttpStatus.CREATED)
     public Admin addNewAdminUser(@RequestBody @Valid Admin admin) {
@@ -66,10 +70,14 @@ public class AdminControllerImpl implements AdminController {
     @ResponseStatus(HttpStatus.CREATED)
     public Account addNewCreditCard(@RequestBody @Valid CreditCard creditCard) {
         return adminService.addNewCreditCard(creditCard);    }
+
+    /** PUTMAPPING routes **/
     @PutMapping("/admin/accounts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateSavingAccount(@PathVariable Long id, @RequestBody @Valid Saving saving) {
         adminService.updateSavingAccount(id, saving);    }
+
+    /** PATCHMAPPING ROUTES **/
     @PatchMapping("/admin/users/balance")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateBalance(@RequestBody @Valid AccountBalanceDTO accountBalanceDTO) {
@@ -90,6 +98,8 @@ public class AdminControllerImpl implements AdminController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateMinimumBalance(@PathVariable Long id, @RequestBody @Valid SavingMinimumBalanceDTO savingMinimumBalanceDTO) {
         adminService.updateMinimumBalance(id, savingMinimumBalanceDTO);    }
+
+    /** DELETE-MAPPING routes* */
     @DeleteMapping("/admin/accounts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccount(@PathVariable Long id) {

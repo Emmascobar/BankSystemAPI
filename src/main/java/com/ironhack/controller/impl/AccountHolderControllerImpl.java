@@ -22,13 +22,18 @@ public class AccountHolderControllerImpl implements AccountHolderController {
         return accountHolderService.getAccount(id);
     }
 
-    /* GETMAPPING Get Balance - Account Holders */
-    @GetMapping("user/login/accounts/{id}")
+    /* GETMAPPING Get Credit Balance - Account Holders */
+    @GetMapping("user/login/accounts/{id}/credit-balance")
     @ResponseStatus(HttpStatus.OK)
     public Money getCreditBalance(Authentication authentication, @PathVariable Long id) {
         return accountHolderService.getCreditBalance(id);
     }
-
+    /* GETMAPPING Get Saving Balance - Account Holders */
+    @GetMapping("user/login/accounts/{id}/saving-balance")
+    @ResponseStatus(HttpStatus.OK)
+    public Money getSavingBalance(Authentication authentication, @PathVariable Long id) {
+        return accountHolderService.getSavingBalance(id);
+    }
     /* Transfers POSTMAPPING Account Holders */
     @PostMapping("User/login/accounts/transference")
     @ResponseStatus(HttpStatus.CREATED)

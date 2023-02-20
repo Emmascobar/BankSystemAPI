@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TransferenceRepository extends JpaRepository<Transfer, Long> {
-    Transfer findTransferenceById(Long id);
+public interface TransferRepository extends JpaRepository<Transfer, Long> {
+    Transfer findTransferById(Long id);
 }

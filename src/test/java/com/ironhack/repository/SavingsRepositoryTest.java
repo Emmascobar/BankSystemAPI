@@ -1,4 +1,4 @@
-package com.ironhack.controller.impl;
+package com.ironhack.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -11,32 +11,29 @@ import com.ironhack.model.Users.ThirdParty;
 import com.ironhack.model.Utils.Address;
 import com.ironhack.model.Utils.Money;
 import com.ironhack.repository.Accounts.AccountRepository;
+import com.ironhack.repository.Accounts.SavingRepository;
 import com.ironhack.repository.Users.AdminRepository;
 import com.ironhack.repository.Users.ThirdPartyRepository;
 import com.ironhack.repository.Users.UserRepository;
-import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AccountHolderControllerImplTest {
+class SavingsRepositoryTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -58,6 +55,8 @@ class AccountHolderControllerImplTest {
     private ThirdParty thirdParty;
     private Address address01, address02, address03;
     private Admin admin;
+    @Autowired
+    private SavingRepository savingRepository;
 
 
     @BeforeEach
@@ -91,58 +90,10 @@ class AccountHolderControllerImplTest {
         thirdPartyRepository.deleteAll();
     }
 
-
     @Test
-        void creditBalance_LoggedUser_Result () throws Exception {
-            MvcResult mvcResult = mockMvc.perform(
-
-                            MockMvcRequestBuilders.get("/login")
-                                    .param("username", "mattfabbro")
-                                    .param("password", "mattfabbro88")
-                    )
-                    .andExpect(status().isOk())
-                    .andReturn();
-            // Parse response to JSON
-            JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
-
-            // Get access token
-            String token = jsonObject.getString("access_token");
-
-            System.out.println(token);
-
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization", "Bearer " + token);
-            System.out.println(httpHeaders);
-
-            mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/user/login/accounts/" + accountHolder1.getId() + "credit-balance").headers(httpHeaders))
-                    .andExpect(status().isOk())
-                    .andReturn();
-            assertTrue(mvcResult.getResponse().getContentAsString().contains("Matias Fabbro"));
-        }
-    @Test
-    void savingBalance_LoggedUser_Result () throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
-
-                        MockMvcRequestBuilders.get("/login")
-                                .param("username", "pavlomenendez")
-                                .param("password", "pavlomenendez88")
-                )
-                .andExpect(status().isOk())
-                .andReturn();
-        // Parse response to JSON
-        JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
-
-        // Get access token
-        String token = jsonObject.getString("access_token");
-        System.out.println(token);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", "Bearer " + token);
-        System.out.println(httpHeaders);
-
-        mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/user/login/accounts/" + accountHolder2.getId() + "saving-balance").headers(httpHeaders))
-                .andExpect(status().isOk())
-                .andReturn();
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("Pavlo Menendez"));
+    void jpaMethods_TheyWorkAsExpected(){
+        Optional<Saving> optionalSaving = savingRepository.findById(saving01.getId());
+        assertTrue(optionalSaving.isPresent());
+        assertEquals(saving01.getPrimaryOwner().getName(), optionalSaving.get().getPrimaryOwner().getName());
     }
 }

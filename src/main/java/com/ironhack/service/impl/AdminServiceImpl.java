@@ -9,6 +9,7 @@ import com.ironhack.model.Users.*;
 import com.ironhack.model.Utils.Money;
 import com.ironhack.repository.Accounts.*;
 import com.ironhack.repository.Users.*;
+import com.ironhack.repository.Utils.TransferRepository;
 import com.ironhack.service.interfaces.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,11 +46,14 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     RoleRepository roleRepository;
     @Autowired
+    TransferRepository transferRepository;
+    @Autowired
     PasswordEncoder passwordEncoder;
     String encodedPassword;
     Role role;
     @Autowired
     private UserRepository userRepository;
+
 
     /** ------------------------------------------------------------------------------------ **/
 

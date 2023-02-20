@@ -22,6 +22,10 @@ public abstract class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "balance"))
+    })
     private Money balance;
     @NotEmpty(message = "Secret key is necessary")
     private Integer secretKey;

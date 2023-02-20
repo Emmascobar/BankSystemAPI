@@ -6,7 +6,7 @@ import com.ironhack.model.Utils.Money;
 import com.ironhack.model.Utils.Transfer;
 import com.ironhack.repository.Accounts.AccountRepository;
 import com.ironhack.repository.Users.ThirdPartyRepository;
-import com.ironhack.repository.Utils.TransferenceRepository;
+import com.ironhack.repository.Utils.TransferRepository;
 import com.ironhack.service.interfaces.ThirdPartyService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
     @Autowired
     AccountRepository accountRepository;
     @Autowired
-    private TransferenceRepository transferenceRepository;
+    private TransferRepository transferRepository;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
@@ -46,8 +46,8 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Wrong SecretKey");
         }
         /* Save & Registry transfer on system and database */
-        log.info("Transference registry on DateBase, from " + transfer.getId() + " to " + transfer.getDestinationId() + " with a amount of " + transfer.getAmount() + " at " + LocalDate.now());
-        return transferenceRepository.save(transfer);
+        log.info("Transfer registry on DateBase, from " + transfer.getId() + " to " + transfer.getDestinationId() + " with a amount of " + transfer.getAmount() + " at " + LocalDate.now());
+        return transferRepository.save(transfer);
     }
 
 }

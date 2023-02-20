@@ -6,15 +6,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class ThirdParty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+    @NotEmpty
+    @DecimalMin(value = "0")
     private Money balance;
-    @NotBlank(message = "Insert a hashkey")
+    @NotBlank(message = "Insert a hashKey")
     private String hashKey;
     public ThirdParty() {
     }

@@ -40,6 +40,7 @@ With the correct use of BANKING SYSTEM API, you will be able to:
 - Java / Spring / SpringBoot : to write the API code by using the libraries provided by both frameworks.
 - Unit testing : to test the functionality of all repository routes and controllers.
 - JPA: to map and relate the API with the database.
+- SQL: to review and administrate the database.
 ## Information for Devs:
 - The API code is written with the naming conventions, among others, we use PascalCase for the name of Models, and their homonyms in SQL with snake_case. It's suggested for future modifications follows the same convention to keep clean the project.
 - The root model of the repository, controllers, models and services were correctly organized in different packages, given possible future updates and the growth of the project, which will facilitate the development of the architecture.
